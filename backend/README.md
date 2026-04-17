@@ -240,6 +240,7 @@ GET /api/admin/reports?status=PENDING
   isDeleted: Boolean,
   avatar: String,
   bio: String,
+  about: String,
   createdAt: Date,
   updatedAt: Date
 }

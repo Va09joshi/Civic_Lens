@@ -1,0 +1,12 @@
+{
+  "/_not-found": "app/_not-found.js",
+  "/api/news/route": "app/api/news/route.js",
+  "/explore/page": "app/explore/page.js",
+  "/create/page": "app/create/page.js",
+  "/page": "app/page.js",
+  "/api/proxy/[...path]/route": "app/api/proxy/[...path]/route.js",
+  "/login/page": "app/login/page.js",
+  "/profile/page": "app/profile/page.js",
+  "/post/[id]/page": "app/post/[id]/page.js",
+  "/signup/page": "app/signup/page.js"
+}

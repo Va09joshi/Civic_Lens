@@ -13,7 +13,10 @@ exports.getProfile = async (req, res, next) => {
       throw new AppError(404, 'User not found');
     }
 
-    sendResponse(res, 200, user, 'Profile retrieved successfully');
+    const userData = user.toObject();
+    userData.about = userData.about ?? userData.bio ?? '';
+
+    sendResponse(res, 200, userData, 'Profile retrieved successfully');
   } catch (error) {
     next(error);
   }
@@ -63,6 +66,11 @@ exports.updateProfile = async (req, res, next) => {
       }
     });
 
+    if (value.about !== undefined) {
+      updateData.bio = value.about;
+      updateData.about = value.about;
+    }
+
     const user = await User.findByIdAndUpdate(req.user.id, updateData, {
       new: true,
       runValidators: true,
@@ -72,7 +80,10 @@ exports.updateProfile = async (req, res, next) => {
       throw new AppError(404, 'User not found');
     }
 
-    sendResponse(res, 200, user, 'Profile updated successfully');
+    const userData = user.toObject();
+    userData.about = userData.about ?? userData.bio ?? '';
+
+    sendResponse(res, 200, userData, 'Profile updated successfully');
   } catch (error) {
     next(error);
   }
@@ -105,7 +116,10 @@ exports.getUserById = async (req, res, next) => {
       throw new AppError(404, 'User not found');
     }
 
-    sendResponse(res, 200, user, 'User retrieved successfully');
+    const userData = user.toObject();
+    userData.about = userData.about ?? userData.bio ?? '';
+
+    sendResponse(res, 200, userData, 'User retrieved successfully');
   } catch (error) {
     next(error);
   }

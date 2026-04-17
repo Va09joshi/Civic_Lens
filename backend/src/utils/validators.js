@@ -15,6 +15,9 @@ const schemas = {
   updateProfile: Joi.object({
     name: Joi.string().min(2).max(50),
     email: Joi.string().email(),
+    avatar: Joi.string().uri(),
+    bio: Joi.string().max(500).allow(''),
+    about: Joi.string().max(500).allow(''),
   }).min(1),
 
   createPost: Joi.object({

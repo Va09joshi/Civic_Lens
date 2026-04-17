@@ -1,0 +1,23 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="dots" x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="2" fill="#64748B" fill-opacity="0.26" />
+    </pattern>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E2E8F0" stop-opacity="0.62" />
+      <stop offset="1" stop-color="#F8FAFC" stop-opacity="0.86" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#fade)"/>
+  <rect width="1600" height="900" fill="url(#dots)" opacity="0.55"/>
+
+  <g fill="#94A3B8" fill-opacity="0.28">
+    <path d="M155 275L208 225L313 198L389 215L428 259L412 306L326 333L248 336L186 319L145 297Z"/>
+    <path d="M340 372L389 355L427 377L448 419L432 463L383 494L336 481L317 436Z"/>
+    <path d="M471 233L558 199L655 195L727 232L710 282L632 311L542 305L485 279Z"/>
+    <path d="M756 288L815 249L913 235L1008 249L1083 295L1078 353L1006 392L894 400L798 377L753 335Z"/>
+    <path d="M820 423L901 400L1006 414L1088 450L1111 506L1045 545L945 560L854 539L791 488Z"/>
+    <path d="M1112 476L1170 460L1223 473L1260 512L1242 558L1188 580L1136 566L1100 526Z"/>
+  </g>
+</svg>

@@ -1,0 +1,44 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1200" y2="800" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EFF6FF"/>
+      <stop offset="1" stop-color="#E0F2FE"/>
+    </linearGradient>
+    <radialGradient id="nodeGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(0 0) rotate(90) scale(90)">
+      <stop stop-color="#3B82F6" stop-opacity="0.65"/>
+      <stop offset="1" stop-color="#3B82F6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="800" rx="32" fill="url(#bg2)"/>
+  <g stroke="#60A5FA" stroke-width="4" opacity="0.45">
+    <path d="M170 180L360 280L530 180L720 300L930 200"/>
+    <path d="M360 280L430 470L620 560L800 460L980 560"/>
+    <path d="M170 180L260 410L430 470"/>
+    <path d="M720 300L620 560"/>
+    <path d="M930 200L800 460"/>
+  </g>
+  <g>
+    <circle cx="170" cy="180" r="22" fill="#2563EB"/>
+    <circle cx="360" cy="280" r="20" fill="#2563EB"/>
+    <circle cx="530" cy="180" r="22" fill="#2563EB"/>
+    <circle cx="720" cy="300" r="22" fill="#2563EB"/>
+    <circle cx="930" cy="200" r="22" fill="#2563EB"/>
+    <circle cx="260" cy="410" r="20" fill="#2563EB"/>
+    <circle cx="430" cy="470" r="22" fill="#2563EB"/>
+    <circle cx="620" cy="560" r="22" fill="#2563EB"/>
+    <circle cx="800" cy="460" r="20" fill="#2563EB"/>
+    <circle cx="980" cy="560" r="22" fill="#2563EB"/>
+  </g>
+  <g opacity="0.4">
+    <circle cx="170" cy="180" r="90" fill="url(#nodeGlow)"/>
+    <circle cx="530" cy="180" r="90" fill="url(#nodeGlow)"/>
+    <circle cx="720" cy="300" r="90" fill="url(#nodeGlow)"/>
+    <circle cx="430" cy="470" r="90" fill="url(#nodeGlow)"/>
+    <circle cx="620" cy="560" r="90" fill="url(#nodeGlow)"/>
+  </g>
+  <g>
+    <rect x="80" y="640" width="1040" height="96" rx="16" fill="white"/>
+    <text x="130" y="698" fill="#0F172A" font-family="Arial, sans-serif" font-size="34" font-weight="700">Community Intelligence Network</text>
+    <text x="760" y="698" fill="#2563EB" font-family="Arial, sans-serif" font-size="26" font-weight="700">+ 48K active users</text>
+  </g>
+</svg>
