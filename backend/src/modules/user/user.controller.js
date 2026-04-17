@@ -1,6 +1,8 @@
 const User = require('./user.model');
+const Post = require('../post/post.model');
 const { sendResponse } = require('../../utils/apiResponse');
 const { validate, schemas } = require('../../utils/validators');
+const { getPaginationParams, getMetadata } = require('../../utils/pagination');
 const { AppError } = require('../../middleware/error.middleware');
 
 exports.getProfile = async (req, res, next) => {
@@ -12,6 +14,32 @@ exports.getProfile = async (req, res, next) => {
     }
 
     sendResponse(res, 200, user, 'Profile retrieved successfully');
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getMyPosts = async (req, res, next) => {
+  try {
+    const { page, limit, skip } = getPaginationParams(req.query);
+
+    const filter = {
+      createdBy: req.user.id,
+      isDeleted: false,
+      isBlocked: false,
+    };
+
+    const total = await Post.countDocuments(filter);
+    const posts = await Post.find(filter)
+      .populate('createdBy', 'name email avatar')
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    sendResponse(res, 200, {
+      posts,
+      metadata: getMetadata(page, limit, total),
+    }, 'My posts retrieved successfully');
   } catch (error) {
     next(error);
   }

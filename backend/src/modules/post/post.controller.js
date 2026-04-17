@@ -8,6 +8,20 @@ const { AppError } = require('../../middleware/error.middleware');
 const { analyzeCredibility } = require('../ai/ai.service');
 const cloudinary = require('../../config/cloudinary');
 
+const withLikeSummary = (post, currentUserId) => {
+  const likes = post.likes || [];
+  const likesCount = likes.length;
+  const likedByMe = currentUserId
+    ? likes.some(like => like && like._id && like._id.toString() === currentUserId.toString())
+    : false;
+
+  return {
+    ...post,
+    likesCount,
+    likedByMe,
+  };
+};
+
 exports.createPost = async (req, res, next) => {
   try {
     const { error, value } = validate(schemas.createPost, req.body);
@@ -90,8 +104,10 @@ exports.getPosts = async (req, res, next) => {
       .limit(limit)
       .lean();
 
+    const transformedPosts = posts.map(post => withLikeSummary(post, req.user?.id));
+
     sendResponse(res, 200, {
-      posts,
+      posts: transformedPosts,
       metadata: getMetadata(page, limit, total),
     }, 'Posts retrieved successfully');
   } catch (error) {
@@ -103,13 +119,14 @@ exports.getPostById = async (req, res, next) => {
   try {
     const post = await Post.findById(req.params.id)
       .populate('createdBy', 'name email avatar')
-      .populate('likes', 'name avatar');
+      .populate('likes', 'name avatar')
+      .lean();
 
-    if (!post || post.isDeleted) {
+    if (!post || post.isDeleted || post.isBlocked) {
       throw new AppError(404, 'Post not found');
     }
 
-    sendResponse(res, 200, post, 'Post retrieved successfully');
+    sendResponse(res, 200, withLikeSummary(post, req.user?.id), 'Post retrieved successfully');
   } catch (error) {
     next(error);
   }
@@ -199,7 +216,7 @@ exports.toggleLike = async (req, res, next) => {
     }
 
     const userId = req.user.id;
-    const likeIndex = post.likes.indexOf(userId);
+    const likeIndex = post.likes.findIndex(like => like.toString() === userId.toString());
 
     if (likeIndex === -1) {
       // Add like
@@ -236,12 +253,16 @@ exports.getPostsByCategory = async (req, res, next) => {
     const total = await Post.countDocuments(filter);
     const posts = await Post.find(filter)
       .populate('createdBy', 'name email avatar')
+      .populate('likes', 'name avatar')
       .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(limit);
+      .limit(limit)
+      .lean();
+
+    const transformedPosts = posts.map(post => withLikeSummary(post, req.user?.id));
 
     sendResponse(res, 200, {
-      posts,
+      posts: transformedPosts,
       metadata: getMetadata(page, limit, total),
     }, 'Posts retrieved successfully');
   } catch (error) {
@@ -263,12 +284,16 @@ exports.getPostsByCity = async (req, res, next) => {
     const total = await Post.countDocuments(filter);
     const posts = await Post.find(filter)
       .populate('createdBy', 'name email avatar')
+      .populate('likes', 'name avatar')
       .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(limit);
+      .limit(limit)
+      .lean();
+
+    const transformedPosts = posts.map(post => withLikeSummary(post, req.user?.id));
 
     sendResponse(res, 200, {
-      posts,
+      posts: transformedPosts,
       metadata: getMetadata(page, limit, total),
     }, 'Posts retrieved successfully');
   } catch (error) {

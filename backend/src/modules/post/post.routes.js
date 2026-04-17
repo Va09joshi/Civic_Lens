@@ -21,7 +21,7 @@ const router = express.Router();
 
 router.post('/', authMiddleware, apiLimiter, upload.array('images', 5), postController.createPost);
 router.get('/', optionalAuth, postController.getPosts);
-router.get('/:id', postController.getPostById);
+router.get('/:id', optionalAuth, postController.getPostById);
 router.patch('/:id', authMiddleware, upload.array('images', 5), postController.updatePost);
 router.delete('/:id', authMiddleware, postController.deletePost);
 router.post('/:id/like', authMiddleware, postController.toggleLike);

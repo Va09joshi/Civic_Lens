@@ -5,6 +5,7 @@ const userController = require('./user.controller');
 const router = express.Router();
 
 router.get('/me', authMiddleware, userController.getProfile);
+router.get('/me/posts', authMiddleware, userController.getMyPosts);
 router.patch('/me', authMiddleware, userController.updateProfile);
 router.delete('/me', authMiddleware, userController.deleteProfile);
 router.get('/:id', userController.getUserById);
