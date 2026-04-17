@@ -193,19 +193,77 @@
           "response": []
         },
         {
-          "name": "Get Posts by Category",
+          "name": "Get Posts by Category (Municipal Services)",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/posts/category/POTHOLE?page=1&limit=10",
+              "raw": "{{base_url}}/posts/category/MUNICIPAL_SERVICES?page=1&limit=10",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "posts",
                 "category",
-                "POTHOLE"
+                "MUNICIPAL_SERVICES"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Posts by Category (Political Governance)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts/category/POLITICAL_GOVERNANCE?page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "posts",
+                "category",
+                "POLITICAL_GOVERNANCE"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Posts by Category (Road Safety)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/posts/category/ROAD_SAFETY?page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "posts",
+                "category",
+                "ROAD_SAFETY"
               ],
               "query": [
                 {
@@ -413,7 +471,33 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"title\": \"Overflowing garbage bins near Central Market\",\n  \"description\": \"Three municipal bins have been overflowing for two days, causing foul smell and stray animals gathering in the lane.\",\n  \"category\": \"SANITATION\",\n  \"type\": \"ISSUE\",\n  \"location\": {\n    \"city\": \"Mumbai\",\n    \"lat\": 19.0760,\n    \"lng\": 72.8777\n  }\n}"
+              "raw": "{\n  \"title\": \"Overflowing garbage bins near Central Market\",\n  \"description\": \"Three municipal bins have been overflowing for two days, causing foul smell and stray animals gathering in the lane.\",\n  \"category\": \"MUNICIPAL_SERVICES\",\n  \"type\": \"ISSUE\",\n  \"location\": {\n    \"city\": \"Mumbai\",\n    \"lat\": 19.0760,\n    \"lng\": 72.8777\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/posts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Post (Political Governance Example)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Ward budget meeting notice not published on time\",\n  \"description\": \"The local ward office did not publish the monthly budget utilization notice as required, affecting transparency for residents.\",\n  \"category\": \"POLITICAL_GOVERNANCE\",\n  \"type\": \"ISSUE\",\n  \"location\": {\n    \"city\": \"Pune\",\n    \"lat\": 18.5204,\n    \"lng\": 73.8567\n  }\n}"
             },
             "url": {
               "raw": "{{base_url}}/posts",
