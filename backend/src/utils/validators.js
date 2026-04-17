@@ -20,7 +20,23 @@ const schemas = {
   createPost: Joi.object({
     title: Joi.string().required().min(5).max(200),
     description: Joi.string().required().min(10).max(5000),
-    category: Joi.string().valid('POTHOLE', 'STREETLIGHT', 'SANITATION', 'WATER', 'ELECTRICITY', 'TRAFFIC', 'POLLUTION', 'CORRUPTION', 'OTHER').required(),
+    category: Joi.string().valid(
+      'POTHOLE',
+      'STREETLIGHT',
+      'SANITATION',
+      'WATER',
+      'ELECTRICITY',
+      'TRAFFIC',
+      'POLLUTION',
+      'CORRUPTION',
+      'MUNICIPAL_SERVICES',
+      'POLITICAL_GOVERNANCE',
+      'PUBLIC_TRANSPORT',
+      'ROAD_SAFETY',
+      'DRAINAGE',
+      'PARKS_PUBLIC_SPACES',
+      'OTHER'
+    ).required(),
     type: Joi.string().valid('ISSUE', 'NEWS').required(),
     location: Joi.object({
       city: Joi.string().required(),
@@ -32,7 +48,23 @@ const schemas = {
   updatePost: Joi.object({
     title: Joi.string().min(5).max(200),
     description: Joi.string().min(10).max(5000),
-    category: Joi.string().valid('POTHOLE', 'STREETLIGHT', 'SANITATION', 'WATER', 'ELECTRICITY', 'TRAFFIC', 'POLLUTION', 'CORRUPTION', 'OTHER'),
+    category: Joi.string().valid(
+      'POTHOLE',
+      'STREETLIGHT',
+      'SANITATION',
+      'WATER',
+      'ELECTRICITY',
+      'TRAFFIC',
+      'POLLUTION',
+      'CORRUPTION',
+      'MUNICIPAL_SERVICES',
+      'POLITICAL_GOVERNANCE',
+      'PUBLIC_TRANSPORT',
+      'ROAD_SAFETY',
+      'DRAINAGE',
+      'PARKS_PUBLIC_SPACES',
+      'OTHER'
+    ),
     type: Joi.string().valid('ISSUE', 'NEWS'),
   }).min(1),
 
