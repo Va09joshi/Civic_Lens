@@ -1,4 +1,4 @@
-// File: C:\Users\vaibh\Desktop\kk-infotech\CivicLens\Webbsite\civiclens\app\api\proxy\[...path]\route.ts
+// File: C:\Users\vaibh\Desktop\kk-infotech\CivicLens\Website\app\api\proxy\[...path]\route.ts
 import * as entry from '../../../../../../app/api/proxy/[...path]/route.js'
 import type { NextRequest } from 'next/server.js'
 

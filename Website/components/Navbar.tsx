@@ -41,9 +41,8 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 border-b border-slate-200/90 bg-white/95 backdrop-blur">
       <div className="mx-auto max-w-7xl px-4 md:px-8 py-3 md:py-4">
         <div className="flex flex-wrap items-center justify-between gap-3 md:gap-4">
-          <Link href="/" className="flex items-center gap-2 font-bold text-primary text-2xl tracking-tight">
-            <img src="/logo.svg" alt="CivicLens" className="h-9 w-9" />
-            <span>CivicLens</span>
+          <Link href="/" className="flex items-center gap-2">
+            <img src="/logo.png" alt="CivicLens" className="h-12 w-auto object-contain drop-shadow-md" />
           </Link>
 
           <form
@@ -67,20 +66,31 @@ export default function Navbar() {
             </button>
           </form>
 
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" onClick={() => router.push("/explore")} className="px-4 md:px-5 py-2.5">
+          <div className="flex items-center gap-4 md:gap-6 px-2">
+            <button 
+              onClick={() => router.push("/")} 
+              className="text-sm font-bold text-slate-600 hover:text-blue-600 transition-colors"
+            >
+              Home
+            </button>
+            <button 
+              onClick={() => router.push("/explore")} 
+              className="text-sm font-bold text-slate-600 hover:text-blue-600 transition-colors"
+            >
               Feed
-            </Button>
-            <Button onClick={() => router.push("/create")} className="px-4 md:px-5 py-2.5">
+            </button>
+            <button 
+              onClick={() => router.push("/create")} 
+              className="text-sm font-bold text-slate-600 hover:text-blue-600 transition-colors"
+            >
               Create Post
-            </Button>
-            <Button
-              variant="outline"
+            </button>
+            <button
               onClick={() => router.push(isLoggedIn ? "/profile" : "/login")}
-              className="px-4 md:px-5 py-2.5"
+              className="text-sm font-bold text-slate-600 hover:text-blue-600 transition-colors"
             >
               {isLoggedIn ? "Profile" : "Login"}
-            </Button>
+            </button>
           </div>
         </div>
       </div>

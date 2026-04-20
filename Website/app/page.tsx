@@ -4,10 +4,13 @@ import Link from "next/link";
 import { getTrendingPosts } from "../services/posts";
 import PostCard from "../components/PostCard";
 import SkeletonPostCard from "../components/SkeletonPostCard";
+import TestimonialsSection from "../components/TestimonialsSection";
+import AboutHighlights from "../components/AboutHighlights";
+import CivicBot from "../components/CivicBot";
 import { motion, Variants } from "framer-motion";
 import Button from "../components/Button";
 import { Post } from "../types";
-import { FaBrain, FaMapMarkedAlt, FaPlayCircle, FaQuoteLeft, FaStar, FaTasks } from "react-icons/fa";
+import { FaBrain, FaMapMarkedAlt, FaPlayCircle, FaQuoteLeft, FaStar, FaTasks, FaLeaf } from "react-icons/fa";
 
 const heroContainerVariants: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -116,14 +119,27 @@ function getInitials(name: string): string {
 
 const faqs = [
   {
+    icon: "✨",
     q: "How does AI credibility scoring work?",
     a: "CivicLens combines metadata checks, cross-post consistency, report signals, and community feedback to generate an initial confidence state."
   },
   {
+    icon: "📋",
     q: "Can I report issues with images from mobile?",
-    a: "Yes. You can create posts with location context and photos directly from phone, making field reports quick and actionable."
+    a: "Yes. You can create posts with location context and photos directly from your phone, making field reports quick and actionable."
   },
   {
+    icon: "📞",
+    q: "What are the important numbers to call?",
+    a: "For immediate assistance, dial 112 for Emergency, 100 for Police, 101 for Fire, and 108 for Ambulance. Civic municipal help is 1533."
+  },
+  {
+    icon: "💡",
+    q: "How can I find a solution to my neighborhood issue?",
+    a: "Browse the 'Explore Feed' to look up verified solutions. You can track progress, engage with local operations, and follow successful public action templates."
+  },
+  {
+    icon: "🔒",
     q: "Who can view or use submitted reports?",
     a: "Reports are visible to citizens and can be used by local volunteers, media groups, and civic departments for faster response workflows."
   }
@@ -131,77 +147,80 @@ const faqs = [
 
 const civicSenseVideos = [
   {
-    title: "Civic Sense In Daily Life",
-    channel: "YouTube Search",
-    query: "civic sense in daily life india",
-    href: "https://www.youtube.com/results?search_query=civic+sense+in+daily+life+india"
+    title: "What is Civic Sense? | Understanding Daily Responsibilities",
+    channel: "Civic Awareness",
+    videoId: "5dDsAvhDXh0",
+    href: "https://www.youtube.com/watch?v=5dDsAvhDXh0"
   },
   {
-    title: "Swachh Bharat: Clean Streets, Better Cities",
-    channel: "YouTube Search",
-    query: "swachh bharat awareness video",
-    href: "https://www.youtube.com/results?search_query=swachh+bharat+awareness+video"
+    title: "Swachh Bharat Abhiyan: Clean Streets, Better Cities",
+    channel: "Swachh Bharat Mission",
+    videoId: "HZ8L3h4jfe4",
+    href: "https://www.youtube.com/watch?v=HZ8L3h4jfe4"
   },
   {
-    title: "Road Safety & Public Responsibility",
-    channel: "YouTube Search",
-    query: "india road safety public awareness video",
-    href: "https://www.youtube.com/results?search_query=india+road+safety+public+awareness+video"
+    title: "Road Safety in India - Public Responsibility",
+    channel: "Road Safety Foundation",
+    videoId: "BVjUabjx-00",
+    href: "https://www.youtube.com/watch?v=BVjUabjx-00"
   }
 ];
 
 function CivicVideoCard({
   title,
   channel,
-  query,
+  videoId,
   href,
   delay
 }: {
   title: string;
   channel: string;
-  query: string;
+  videoId: string;
   href: string;
   delay: number;
 }) {
   const [loaded, setLoaded] = useState(false);
-  const embedSrc = `https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}`;
+  const embedSrc = `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`;
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 18 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.35 }}
-      transition={{ delay }}
-      whileHover={{ y: -4 }}
-      className="rounded-2xl border border-slate-200 bg-slate-50 hover:bg-white shadow-sm hover:shadow-md transition-all overflow-hidden"
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ delay, duration: 0.5, ease: "easeOut" }}
+      whileHover={{ y: -8, boxShadow: "0 20px 40px -8px rgba(37,99,235,0.12)" }}
+      className="rounded-2xl border border-blue-100 bg-white shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group"
     >
-      <div className="relative h-44 w-full bg-slate-200">
+      <div className="relative h-48 w-full bg-slate-100 overflow-hidden">
         {!loaded && (
-          <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200" />
+          <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-blue-50 via-slate-50 to-blue-50" />
         )}
         <iframe
           src={embedSrc}
           title={title}
-          className={`h-full w-full border-0 transition-opacity duration-300 ${loaded ? "opacity-100" : "opacity-0"}`}
+          className={`h-full w-full border-0 transition-all duration-500 group-hover:scale-105 ${loaded ? "opacity-100" : "opacity-0"}`}
           onLoad={() => setLoaded(true)}
           loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         />
-        <span className="absolute left-3 bottom-3 inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold text-slate-800">
-          <FaPlayCircle className="text-pink-600" /> YouTube
+        {/* Gradient overlay on hover */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+        <span className="absolute left-3 bottom-3 inline-flex items-center gap-2 rounded-full bg-white/95 backdrop-blur-sm px-3 py-1.5 text-xs font-bold text-slate-800 shadow-md border border-white/50">
+          <FaPlayCircle className="text-red-500" /> YouTube
         </span>
       </div>
-      <div className="p-4">
-        <p className="font-semibold text-slate-900 leading-snug">{title}</p>
-        <p className="mt-1 text-sm text-slate-500">{channel}</p>
+      <div className="p-5">
+        <p className="font-bold text-slate-900 leading-snug group-hover:text-blue-700 transition-colors duration-300 text-[15px]">{title}</p>
+        <p className="mt-1.5 text-sm text-slate-400 font-medium">{channel}</p>
         <a
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-2 inline-block text-xs font-semibold text-blue-700 hover:underline"
+          className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors group/link"
         >
-          Open on YouTube
+          Watch on YouTube
+          <svg className="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
         </a>
       </div>
     </motion.article>
@@ -211,6 +230,7 @@ function CivicVideoCard({
 export default function HomePage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const [openFaq, setOpenFaq] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
@@ -223,7 +243,6 @@ export default function HomePage() {
         setLoading(false);
       });
   }, []);
-
   return (
     <div className="mx-auto max-w-7xl flex flex-col gap-12 md:gap-14 pb-12">
       <motion.section
@@ -284,8 +303,9 @@ export default function HomePage() {
 
           <motion.div
             variants={heroItemVariants}
-            whileHover={{ y: -4 }}
-            className="rounded-2xl border border-slate-200 bg-white p-3 shadow-float w-full"
+            animate={{ y: [-10, 10, -10] }}
+            transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+            className="rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_20px_50px_-12px_rgba(37,99,235,0.15)] w-full"
           >
             <img
               src="/Front.png"
@@ -296,21 +316,33 @@ export default function HomePage() {
         </div>
       </motion.section>
 
-      <section className="relative rounded-3xl border border-slate-900 bg-black p-6 md:p-10 shadow-float overflow-hidden">
+      <motion.section
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="relative rounded-3xl border border-slate-900 bg-black p-6 md:p-10 shadow-float overflow-hidden"
+      >
         <div className="pointer-events-none absolute inset-0 opacity-[0.22] bg-[url('/map-pattern.svg')] bg-cover bg-center" />
-        <div className="mb-8 md:mb-10 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="mb-8 md:mb-10 text-center"
+        >
           <p className="text-sm uppercase tracking-[0.2em] font-semibold text-blue-500">Core Values</p>
           <h2 className="mt-2 text-3xl md:text-6xl font-extrabold text-white tracking-tight">Built For Fast Civic Decisions</h2>
-        </div>
+        </motion.div>
 
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
         {featureCards.map((feature, index) => (
           <motion.article
             key={feature.title}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ delay: index * 0.06 }}
+            initial={{ opacity: 0, y: 40, scale: 0.92, filter: "blur(6px)" }}
+            whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ delay: index * 0.15, duration: 0.6, ease: "easeOut" }}
             whileHover={{ y: -6 }}
             className="rounded-2xl border border-blue-900/70 bg-slate-950 p-6 md:p-8 shadow-[0_0_0_1px_rgba(59,130,246,0.18),0_20px_44px_rgba(2,6,23,0.7)] h-full"
           >
@@ -318,199 +350,307 @@ export default function HomePage() {
               <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-blue-950 text-blue-400 border border-blue-900">
                 <feature.icon size={18} />
               </span>
-              <span className="rounded-full border border-blue-900 bg-blue-950/50 px-2.5 py-1 text-[11px] font-semibold text-blue-300">
-                {feature.tag}
-              </span>
+              <span className="text-xs font-semibold uppercase tracking-wider text-blue-500">{feature.tag}</span>
             </div>
-            <h3 className="mt-6 text-3xl font-extrabold text-white leading-tight">{feature.title}</h3>
-            <p className="mt-4 text-slate-300 leading-relaxed text-lg">{feature.text}</p>
+            <h3 className="mt-5 text-xl font-bold text-white">{feature.title}</h3>
+            <p className="mt-3 text-slate-400 leading-relaxed">{feature.text}</p>
           </motion.article>
         ))}
         </div>
-      </section>
+      </motion.section>
 
-      <section>
-        <div className="mb-5 flex items-center justify-between">
-          <h2 className="text-2xl md:text-3xl font-bold text-slate-900">Featured Posts</h2>
-          <Link href="/explore" className="text-blue-700 font-semibold hover:underline">
-            View all
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {loading
-            ? Array.from({ length: 6 }).map((_, i) => <SkeletonPostCard key={i} />)
-            : posts.map((post, index) => (
-                <motion.div
-                  key={post.id}
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.05 * index }}
-                >
-                  <PostCard post={post} />
-                </motion.div>
-              ))}
-        </div>
-      </section>
-
-      <section className="relative rounded-3xl border border-slate-200 bg-white p-6 md:p-8 shadow-float">
-        <div className="pointer-events-none absolute inset-0 opacity-[0.12] bg-[url('/map-pattern.svg')] bg-cover bg-center" />
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-900">Stories From The Ground</h2>
-            <p className="mt-2 text-slate-600">People using CivicLens to drive real neighborhood outcomes.</p>
-          </div>
-          <p className="text-sm font-semibold text-blue-700">Verified citizen feedback</p>
-        </div>
-
-        <div className="relative z-10 mt-6 overflow-hidden">
+      <motion.section
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="rounded-3xl border border-slate-200 bg-white p-6 md:p-10 shadow-float"
+      >
+        <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <motion.div
-            animate={{ x: [0, -1500] }}
-            transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
-            className="flex items-stretch gap-4 w-max"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.15 }}
           >
-            {movingTestimonials.map((item, index) => (
-              <motion.article
-                key={`${item.author}-${index}`}
-                whileHover={{ y: -6 }}
-                className="w-[340px] md:w-[430px] lg:w-[500px] shrink-0 rounded-2xl bg-white border border-slate-200 p-5 shadow-inner"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="inline-flex items-center justify-center rounded-full bg-blue-50 text-blue-700 h-8 w-8">
-                    <FaQuoteLeft size={14} />
-                  </span>
-                  <div className="flex items-center gap-1 text-blue-600">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <FaStar key={`${item.author}-${index}-${i}`} size={12} />
-                    ))}
-                  </div>
-                </div>
-
-                <p className="mt-4 text-slate-700 leading-relaxed min-h-[124px]">"{item.quote}"</p>
-
-                <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <span
-                      className={`inline-flex h-11 w-11 items-center justify-center rounded-full font-semibold text-sm ${avatarPalette[index % avatarPalette.length]}`}
-                    >
-                      {getInitials(item.author)}
-                    </span>
-                    <div>
-                      <p className="font-semibold text-slate-900">{item.author}</p>
-                      <p className="text-sm text-slate-500">{item.role}</p>
-                    </div>
-                  </div>
-                  <span className="text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-100 rounded-full px-2.5 py-1">
-                    Verified
-                  </span>
-                </div>
-              </motion.article>
-            ))}
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900">Trending Local Reports</h2>
+            <p className="mt-2 text-slate-600">Explore and verify what's happening in your city.</p>
+          </motion.div>
+          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }}>
+            <Link href="/explore" className="text-blue-700 font-semibold hover:underline bg-blue-50 px-4 py-2 rounded-xl">
+              View Issue Feed
+            </Link>
           </motion.div>
         </div>
-      </section>
-
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
-          className="rounded-2xl border border-slate-200 bg-white p-3 shadow-float"
-        >
-          <img
-            src="/ai-response-dashboard.svg"
-            alt="AI generated dashboard of civic response metrics"
-            className="w-full rounded-xl"
-          />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
-          className="rounded-2xl border border-slate-800 bg-slate-900 p-8 text-white shadow-2xl"
-        >
-          <h2 className="text-2xl md:text-3xl font-bold">Built For Citizens, Media, and City Teams</h2>
-          <p className="mt-3 text-slate-300">
-            Whether you are reporting a pothole, tracking flood updates, or monitoring misinformation, CivicLens gives you one place to publish, validate, and coordinate.
-          </p>
-          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="rounded-xl bg-white/10 p-4">
-              <p className="text-lg font-semibold">Trusted Signal</p>
-              <p className="mt-1 text-sm text-slate-300">AI plus civic moderation improves confidence in local information.</p>
-            </div>
-            <div className="rounded-xl bg-white/10 p-4">
-              <p className="text-lg font-semibold">Faster Escalation</p>
-              <p className="mt-1 text-sm text-slate-300">Trending issue detection highlights urgent clusters quickly.</p>
-            </div>
-          </div>
-          <div className="mt-7 flex flex-wrap gap-3">
-            <Link href="/create">
-              <Button style={{ background: "#2563eb", color: "#ffffff" }}>Post Your First Report</Button>
-            </Link>
-            <Link href="/explore">
-              <Button variant="ghost" style={{ color: "#ffffff", border: "1px solid rgba(255,255,255,0.35)" }}>
-                Browse Civic Feed
-              </Button>
-            </Link>
-          </div>
-        </motion.div>
-      </section>
-
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-float">
-          <h2 className="text-2xl font-bold text-slate-900">Trusted By Civic Contributors</h2>
-          <p className="mt-2 text-slate-600">Community groups, independent media, and local operations teams collaborate on one platform.</p>
-          <div className="mt-5 grid grid-cols-2 gap-3">
-            <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700">Metro Citizen Watch</div>
-            <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700">Ward Action Collective</div>
-            <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700">Civic Data Desk</div>
-            <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700">Local Response Unit</div>
-          </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {loading ? (
+             Array.from({ length: 3 }).map((_, i) => <SkeletonPostCard key={i} />)
+          ) : (
+            posts.slice(0, 3).map((post) => (
+              <motion.div
+                key={post.id}
+                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ delay: 0.1 * posts.indexOf(post), duration: 0.55, ease: "easeOut" }}
+              >
+                <PostCard post={post} />
+              </motion.div>
+            ))
+          )}
         </div>
+      </motion.section>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-float">
-          <h2 className="text-2xl font-bold text-slate-900">Frequently Asked Questions</h2>
-          <div className="mt-4 space-y-3">
-            {faqs.map((item) => (
-              <details key={item.q} className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
-                <summary className="cursor-pointer font-semibold text-slate-800">{item.q}</summary>
-                <p className="mt-2 text-sm text-slate-600 leading-relaxed">{item.a}</p>
-              </details>
+          {/* Modern testimonial section */}
+          <TestimonialsSection />
+
+          {/* Features and stats section */}
+          <AboutHighlights />
+
+      {/* AI dashboard/metrics section removed as requested. */}
+
+      {/* Civic Contributors - Centered or full-width now */}
+      <section className="my-14 mx-auto max-w-4xl">
+        <motion.div 
+          initial={{ opacity: 0, y: 40, scale: 0.96 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.65, ease: "easeOut" }}
+          className="rounded-2xl border border-slate-200 border-b-[6px] border-b-green-500 bg-white p-7 md:p-10 shadow-lg transition-transform hover:-translate-y-1 relative overflow-hidden"
+        >
+          <div className="absolute -bottom-6 -right-6 text-green-50 text-9xl opacity-30 select-none pointer-events-none">
+            <FaLeaf /> 
+          </div>
+          
+          <motion.h2
+            initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-2xl md:text-3xl font-bold text-slate-900 relative z-10 text-center"
+          >
+            Trusted By Civic Contributors
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mt-3 text-slate-600 relative z-10 text-center mx-auto max-w-xl"
+          >
+            Community groups, independent media, and local operations teams collaborate on one platform.
+          </motion.p>
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 relative z-10">
+            {["Metro Citizen Watch", "Ward Action Collective", "Civic Data Desk", "Local Response Unit"].map((group, i) => (
+              <motion.div 
+                key={group}
+                initial={{ opacity: 0, y: 20, rotate: -2 }}
+                whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 * i + 0.25, duration: 0.45, ease: "easeOut" }}
+                whileHover={{ scale: 1.05, y: -4 }}
+                className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-4 text-center text-sm font-semibold text-slate-700 hover:border-green-500 hover:bg-green-50 hover:text-green-800 transition-colors cursor-pointer"
+              >
+                {group}
+              </motion.div>
             ))}
           </div>
+        </motion.div>
+      </section>
+
+      {/* Frequently Asked Questions */}
+      <section className="my-16 mx-auto max-w-4xl">
+        <motion.div 
+          initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-8 text-center"
+        >
+          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900">Frequently Asked Questions</h2>
+        </motion.div>
+        
+        <div className="space-y-4">
+          {faqs.map((item, idx) => {
+            const isOpen = openFaq === item.q;
+            return (
+            <motion.div 
+              key={item.q} 
+              initial={{ opacity: 0, x: 50, filter: "blur(4px)" }}
+              whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ delay: idx * 0.08, duration: 0.5, ease: "easeOut" }}
+              className={`group rounded-2xl border ${isOpen ? 'border-green-400 bg-white shadow-md' : 'border-slate-100 bg-slate-50 shadow-sm'} px-5 py-2 hover:bg-white hover:shadow-md transition-all duration-300`}
+            >
+              <button 
+                onClick={() => setOpenFaq(isOpen ? null : item.q)}
+                className="w-full py-2 cursor-pointer list-none flex justify-between items-center outline-none text-left"
+              >
+                <div className="flex items-center gap-4">
+                  <span className="text-xl">{item.icon}</span>
+                  <span className={`font-bold transition-colors ${isOpen ? 'text-green-700' : 'text-slate-900 group-hover:text-green-700'}`}>{item.q}</span>
+                </div>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${isOpen ? 'bg-slate-200 text-slate-700 rotate-180' : 'bg-slate-200 text-slate-500 group-hover:bg-slate-300 group-hover:text-slate-700'}`}>
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </button>
+              <motion.div 
+                initial={false}
+                animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="overflow-hidden"
+              >
+                <div className="pl-10 pr-12 pt-2 pb-4 text-slate-600 leading-relaxed">
+                  {item.a}
+                </div>
+              </motion.div>
+            </motion.div>
+          )})}
         </div>
       </section>
 
-      <section className="rounded-2xl border border-slate-200 bg-white p-7 shadow-float">
-        <div className="mb-5 flex flex-col md:flex-row md:items-end md:justify-between gap-2">
-          <div>
-            <h2 className="text-2xl font-bold text-slate-900">Civic Sense Video Guide</h2>
-            <p className="mt-2 text-slate-600">Watch and share practical videos on civic responsibility and better public behavior.</p>
-          </div>
-          <a
+      {/* CivicBot Interactive Helpline Directory */}
+      <motion.section
+        initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
+        whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="my-16 mx-auto w-full max-w-5xl px-4 xl:px-0"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="mb-6 text-center max-w-2xl mx-auto"
+        >
+          <p className="text-sm font-bold text-[#8b5cf6] uppercase tracking-widest mb-2">Interactive Support</p>
+          <h2 className="text-3xl font-extrabold text-slate-900">National Emergency & Civic Directory</h2>
+          <p className="mt-3 text-slate-600 leading-relaxed">Search for immediate assistance, helplines, or ask our AI guide for verified contact numbers to escalate local matters.</p>
+        </motion.div>
+        <CivicBot />
+      </motion.section>
+
+      {/* Civic Sense Video Guide */}
+      <motion.section 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="rounded-2xl border border-blue-100 bg-white p-8 md:p-10 shadow-sm hover:shadow-lg transition-shadow duration-300"
+      >
+        <div className="mb-7 flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <p className="text-sm font-bold text-blue-600 uppercase tracking-widest mb-2">Learn & Share</p>
+            <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900">Civic Sense Video Guide</h2>
+            <p className="mt-2 text-slate-500 max-w-lg">Watch and share practical videos on civic responsibility and better public behavior across India.</p>
+          </motion.div>
+          <motion.a
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
             href="https://www.youtube.com/results?search_query=civic+sense+india"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm font-semibold text-blue-700 hover:underline"
+            className="inline-flex items-center gap-2 text-sm font-bold text-blue-600 hover:text-blue-800 transition-colors bg-blue-50 px-5 py-2.5 rounded-full hover:bg-blue-100 border border-blue-100"
           >
-            Explore more videos
-          </a>
+            Explore more
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
+          </motion.a>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {civicSenseVideos.map((video, index) => (
             <CivicVideoCard
               key={video.href}
               title={video.title}
               channel={video.channel}
-              query={video.query}
+              videoId={video.videoId}
               href={video.href}
-              delay={0.06 * index}
+              delay={0.1 * index}
             />
           ))}
         </div>
-      </section>
+      </motion.section>
+
+      {/* Keeping You a Step Ahead — Civic Banner */}
+      <motion.section
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="rounded-3xl bg-blue-50 border border-blue-100 p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 md:gap-12 overflow-hidden relative"
+      >
+        {/* Decorative background elements */}
+        <div className="absolute -top-16 -right-16 w-48 h-48 bg-blue-100/50 rounded-full blur-3xl" />
+        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-200/30 rounded-full blur-2xl" />
+        
+        <div className="flex-1 relative z-10">
+          <motion.h2
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight"
+          >
+            Keeping Citizens a Step Ahead
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 15  }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="mt-4 text-slate-600 leading-relaxed max-w-xl text-[15px]"
+          >
+            With transparent civic reporting, AI-powered credibility scoring, and community-driven accountability,
+            CivicLens empowers every citizen to make their neighborhood safer, cleaner, and more responsive — 
+            one report at a time.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="mt-6 flex flex-wrap gap-3"
+          >
+            <Link href="/create">
+              <Button>Report an Issue</Button>
+            </Link>
+            <Link href="/explore" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-blue-700 font-bold text-sm border border-blue-200 hover:bg-blue-50 transition-colors shadow-sm">
+              Explore Reports
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
+            </Link>
+          </motion.div>
+        </div>
+        
+        {/* Illustration */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
+          whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+          animate={{ y: [-10, 10, -10] }}
+          viewport={{ once: true }}
+          transition={{ 
+            opacity: { delay: 0.3, duration: 0.5 },
+            scale: { delay: 0.3, duration: 0.5, type: "spring" },
+            rotate: { delay: 0.3, duration: 0.5 },
+            y: { repeat: Infinity, duration: 4, ease: "easeInOut" }
+          }}
+          className="relative z-10 flex-shrink-0"
+        >
+          <img 
+            src="/ill.jpg" 
+            alt="Civic tracking illustration" 
+            className="w-56 h-56 md:w-64 md:h-64 object-cover rounded-3xl shadow-2xl" 
+          />
+        </motion.div>
+      </motion.section>
     </div>
   );
 }

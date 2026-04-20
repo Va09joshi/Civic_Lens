@@ -22,8 +22,15 @@ async function forward(request: NextRequest, pathParts: string[]): Promise<NextR
   const headers = new Headers();
 
   // Forward auth and content headers required by backend.
-  const auth = request.headers.get("authorization");
+  let auth = request.headers.get("authorization");
+  if (!auth) {
+    const cookieToken = request.cookies.get("cl_token")?.value;
+    if (cookieToken) {
+      auth = `Bearer ${cookieToken}`;
+    }
+  }
   if (auth) headers.set("authorization", auth);
+  
   if (incomingType) headers.set("content-type", incomingType);
 
   const method = request.method.toUpperCase();
@@ -37,8 +44,13 @@ async function forward(request: NextRequest, pathParts: string[]): Promise<NextR
   };
 
   if (withBody) {
-    const body = await request.arrayBuffer();
-    init.body = body;
+    if (incomingType.includes("multipart/form-data")) {
+      init.body = await request.formData();
+      // fetch will automatically set the new multipart/form-data boundary
+      headers.delete("content-type");
+    } else {
+      init.body = await request.arrayBuffer();
+    }
   }
 
   const upstream = await fetch(targetUrl, init);

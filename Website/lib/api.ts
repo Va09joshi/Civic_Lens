@@ -17,8 +17,12 @@ api.interceptors.request.use((config) => {
   if (typeof window !== "undefined") {
     const token = window.localStorage.getItem("token") || readCookie("cl_token");
     if (token) {
-      config.headers = config.headers || {};
-      config.headers.Authorization = `Bearer ${token}`;
+      if (config.headers && typeof config.headers.set === "function") {
+        config.headers.set("Authorization", `Bearer ${token}`);
+      } else {
+        config.headers = config.headers || {};
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     }
   }
   return config;

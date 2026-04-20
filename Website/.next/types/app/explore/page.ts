@@ -1,8 +1,8 @@
-// File: C:\Users\vaibh\Desktop\kk-infotech\CivicLens\Webbsite\civiclens\app\explore\page.tsx
-import * as entry from '../../../../app/explore/page.jsx'
+// File: C:\Users\vaibh\Desktop\kk-infotech\CivicLens\Website\app\explore\page.tsx
+import * as entry from '../../../../app/explore/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
-type TEntry = typeof import('../../../../app/explore/page.jsx')
+type TEntry = typeof import('../../../../app/explore/page.js')
 
 // Check that the entry is a valid entry
 checkFields<Diff<{

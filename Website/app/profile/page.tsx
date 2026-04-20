@@ -186,7 +186,7 @@ export default function ProfilePage() {
 
       <div className="rounded-card shadow-card bg-white p-6 mb-6 flex items-center gap-6">
         <img
-          src={user.avatarUrl || "/logo.svg"}
+          src={user.avatarUrl || "/logo.png"}
           alt={user.name}
           className="w-20 h-20 rounded-full object-cover"
         />
