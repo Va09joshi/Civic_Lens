@@ -22,7 +22,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
   <motion.div
     whileHover={{ y: -6, boxShadow: "0 20px 50px -10px rgba(37,99,235,0.15)" }}
     transition={{ type: "spring", stiffness: 300, damping: 22 }}
-    className="bg-white rounded-3xl shadow-xl flex flex-col w-full mx-auto border border-slate-100"
+    className="bg-white rounded-3xl shadow-xl flex flex-col w-full h-full mx-auto border border-slate-100"
   >
     {/* Gradient header with avatar */}
     <div className="h-24 relative flex items-end justify-center z-10">

@@ -1,5 +1,6 @@
 {
+  "/profile/page": "app/profile/page.js",
+  "/create/page": "app/create/page.js",
   "/api/proxy/[...path]/route": "app/api/proxy/[...path]/route.js",
-  "/page": "app/page.js",
-  "/create/page": "app/create/page.js"
+  "/page": "app/page.js"
 }

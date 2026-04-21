@@ -36,7 +36,7 @@ export default function TestimonialsSection() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.65, ease: "easeOut" }}
-      className="py-12 bg-gradient-to-br from-blue-50 to-white rounded-3xl"
+      className="py-12"
     >
       <motion.div
         initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
@@ -56,6 +56,7 @@ export default function TestimonialsSection() {
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{ delay: i * 0.12, duration: 0.55, ease: "easeOut" }}
+            className="h-full"
           >
             <TestimonialCard
               text={t.text}

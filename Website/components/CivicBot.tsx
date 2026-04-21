@@ -161,15 +161,27 @@ export default function CivicBot() {
 
   return (
     <div className="relative w-full max-w-4xl mx-auto">
-      {/* Animated gradient glow behind the card */}
-      <div className="absolute -inset-1 rounded-[28px] bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500 opacity-60 blur-xl animate-gradient-shift" />
-      <div className="absolute -inset-0.5 rounded-[26px] bg-gradient-to-r from-blue-400 via-violet-500 to-purple-600 opacity-30 blur-md animate-gradient-shift-reverse" />
+      {/* Subtle animated gradient glow */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="absolute -inset-1 rounded-[28px] bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 opacity-[0.08] blur-xl animate-gradient-shift"
+      />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.97 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+        className="absolute -inset-0.5 rounded-[26px] bg-gradient-to-r from-blue-300 via-violet-400 to-purple-400 opacity-[0.05] blur-md animate-gradient-shift-reverse"
+      />
     <motion.div 
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="relative w-full rounded-3xl shadow-xl overflow-hidden border border-blue-100 bg-white flex flex-col h-[700px] max-h-[85vh]"
+      className="relative w-full rounded-3xl shadow-lg overflow-hidden border border-slate-200 bg-white flex flex-col h-[700px] max-h-[85vh]"
     >
       {/* Header — Premium Gradient with Logo */}
       <div className="relative bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 px-6 py-5 flex items-center justify-between z-10 shadow-lg shrink-0 overflow-hidden">

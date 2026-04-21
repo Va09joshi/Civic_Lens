@@ -3,9 +3,11 @@
 @tailwind utilities;
 
 body {
-  @apply bg-background text-secondary;
+  @apply text-secondary;
   font-family: "Google Sans", "Noto Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background: #f1f5f9;
+  background: linear-gradient(165deg, #fefcf9 0%, #faf8f5 25%, #f8f6f1 50%, #fefefe 75%, #fdf9f4 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
 }
 
 .shimmer {

@@ -212,10 +212,9 @@ export default function CreatePostPage() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <motion.form
+      <motion.form
           onSubmit={handleSubmit}
-          className="lg:col-span-2 rounded-3xl border border-slate-200 bg-white p-6 md:p-8 shadow-float"
+          className="rounded-3xl border border-slate-200 bg-white p-6 md:p-8 shadow-float"
         >
           <div className="mb-7 border-b border-slate-200 pb-5">
             <p className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
@@ -387,50 +386,6 @@ export default function CreatePostPage() {
             </Button>
           </div>
         </motion.form>
-
-        <aside className="space-y-4 lg:sticky lg:top-24 h-fit">
-          <motion.div
-            whileHover={{ y: -3 }}
-            className="rounded-3xl border border-slate-200 bg-slate-900 p-5 text-white shadow-float"
-          >
-            <h2 className="text-lg font-bold">Post Quality Checklist</h2>
-            <ul className="mt-3 space-y-2 text-sm text-slate-200">
-              <li>- Mention exact landmark or street name</li>
-              <li>- Keep title specific and short</li>
-              <li>- Add one clear supporting photo</li>
-              <li>- Use category that best matches issue</li>
-            </ul>
-          </motion.div>
-
-          <motion.div
-            whileHover={{ y: -3 }}
-            className="rounded-3xl border border-slate-200 bg-white p-5 shadow-float"
-          >
-            <div className="flex items-center gap-2 text-primary">
-              <FaImage />
-              <h3 className="font-bold">Preview Summary</h3>
-            </div>
-            <div className="mt-3 space-y-2 text-sm text-slate-700">
-              <p><span className="font-semibold">Title:</span> {title || "Not added yet"}</p>
-              <p><span className="font-semibold">Category:</span> {selectedCategoryName || "Not selected"}</p>
-              <p><span className="font-semibold">Description:</span> {description ? `${description.slice(0, 90)}${description.length > 90 ? "..." : ""}` : "Not added yet"}</p>
-            </div>
-          </motion.div>
-
-          <motion.div
-            whileHover={{ y: -3 }}
-            className="rounded-3xl border border-blue-100 bg-blue-50 p-5 shadow-sm"
-          >
-            <div className="flex items-center gap-2 text-blue-700">
-              <FaInfoCircle />
-              <h3 className="font-bold">Why this matters</h3>
-            </div>
-            <p className="mt-2 text-sm text-blue-800">
-              Well-documented civic posts improve visibility and raise the chance of timely response from communities and city teams.
-            </p>
-          </motion.div>
-        </aside>
-      </div>
     </motion.div>
   );
 }

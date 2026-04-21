@@ -7,7 +7,8 @@ import SkeletonPostCard from "../components/SkeletonPostCard";
 import TestimonialsSection from "../components/TestimonialsSection";
 import AboutHighlights from "../components/AboutHighlights";
 import CivicBot from "../components/CivicBot";
-import CivicIssueMap from "../components/CivicIssueMap";
+import dynamic from "next/dynamic";
+const CivicIssueMap = dynamic(() => import("../components/CivicIssueMap"), { ssr: false });
 import { motion, Variants } from "framer-motion";
 import Button from "../components/Button";
 import { Post } from "../types";
@@ -485,17 +486,16 @@ export default function HomePage() {
               whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ delay: idx * 0.08, duration: 0.5, ease: "easeOut" }}
-              className={`group rounded-2xl border ${isOpen ? 'border-green-400 bg-white shadow-md' : 'border-slate-100 bg-slate-50 shadow-sm'} px-5 py-2 hover:bg-white hover:shadow-md transition-all duration-300`}
+              className={`group rounded-2xl border ${isOpen ? 'border-blue-300 bg-white shadow-md' : 'border-slate-200 bg-white shadow-sm'} px-6 py-2 hover:border-blue-200 hover:shadow-md transition-all duration-300`}
             >
               <button 
                 onClick={() => setOpenFaq(isOpen ? null : item.q)}
-                className="w-full py-2 cursor-pointer list-none flex justify-between items-center outline-none text-left"
+                className="w-full py-3 cursor-pointer list-none flex justify-between items-center outline-none text-left"
               >
-                <div className="flex items-center gap-4">
-                  <span className="text-xl">{item.icon}</span>
-                  <span className={`font-bold transition-colors ${isOpen ? 'text-green-700' : 'text-slate-900 group-hover:text-green-700'}`}>{item.q}</span>
-                </div>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${isOpen ? 'bg-slate-200 text-slate-700 rotate-180' : 'bg-slate-200 text-slate-500 group-hover:bg-slate-300 group-hover:text-slate-700'}`}>
+                <span className={`font-bold text-[15px] transition-colors ${isOpen ? 'text-blue-700' : 'text-slate-800 group-hover:text-blue-600'}`}>
+                  {item.q}
+                </span>
+                <div className={`ml-4 w-8 h-8 shrink-0 rounded-full flex items-center justify-center transition-all duration-300 ${isOpen ? 'bg-blue-50 text-blue-600 rotate-180' : 'bg-slate-50 text-slate-400 group-hover:bg-blue-50 group-hover:text-blue-500'}`}>
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
                   </svg>
@@ -507,7 +507,7 @@ export default function HomePage() {
                 transition={{ duration: 0.3, ease: "easeInOut" }}
                 className="overflow-hidden"
               >
-                <div className="pl-10 pr-12 pt-2 pb-4 text-slate-600 leading-relaxed">
+                <div className="pr-12 pt-1 pb-5 text-[14.5px] text-slate-600 leading-relaxed">
                   {item.a}
                 </div>
               </motion.div>
