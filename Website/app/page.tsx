@@ -7,6 +7,7 @@ import SkeletonPostCard from "../components/SkeletonPostCard";
 import TestimonialsSection from "../components/TestimonialsSection";
 import AboutHighlights from "../components/AboutHighlights";
 import CivicBot from "../components/CivicBot";
+import CivicIssueMap from "../components/CivicIssueMap";
 import { motion, Variants } from "framer-motion";
 import Button from "../components/Button";
 import { Post } from "../types";
@@ -358,6 +359,9 @@ export default function HomePage() {
         ))}
         </div>
       </motion.section>
+
+      {/* Civic Issue Hotspot Map */}
+      <CivicIssueMap />
 
       <motion.section
         initial={{ opacity: 0, y: 50 }}

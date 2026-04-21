@@ -89,12 +89,17 @@ export default function CivicBot() {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  const hasInteracted = useRef(false);
+
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (hasInteracted.current) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
   }, [messages]);
 
   const handleSend = (text: string) => {
     if (!text.trim()) return;
+    hasInteracted.current = true;
     
     const userMsg: Message = { id: Date.now().toString(), sender: "user", text };
     setMessages(prev => [...prev, userMsg]);
@@ -155,12 +160,16 @@ export default function CivicBot() {
   };
 
   return (
+    <div className="relative w-full max-w-4xl mx-auto">
+      {/* Animated gradient glow behind the card */}
+      <div className="absolute -inset-1 rounded-[28px] bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500 opacity-60 blur-xl animate-gradient-shift" />
+      <div className="absolute -inset-0.5 rounded-[26px] bg-gradient-to-r from-blue-400 via-violet-500 to-purple-600 opacity-30 blur-md animate-gradient-shift-reverse" />
     <motion.div 
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="w-full max-w-4xl mx-auto rounded-3xl shadow-xl overflow-hidden border border-blue-100 bg-white flex flex-col h-[700px] max-h-[85vh]"
+      className="relative w-full rounded-3xl shadow-xl overflow-hidden border border-blue-100 bg-white flex flex-col h-[700px] max-h-[85vh]"
     >
       {/* Header — Premium Gradient with Logo */}
       <div className="relative bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 px-6 py-5 flex items-center justify-between z-10 shadow-lg shrink-0 overflow-hidden">
@@ -293,5 +302,6 @@ export default function CivicBot() {
         </form>
       </div>
     </motion.div>
+    </div>
   );
 }

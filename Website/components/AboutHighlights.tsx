@@ -1,6 +1,7 @@
 "use client";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { FaCheckCircle, FaMapMarkerAlt, FaEye, FaUsers } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 
 const features = [
   {
@@ -30,11 +31,72 @@ const features = [
 ];
 
 const stats = [
-  { value: "92K+", label: "Issues Reported" },
-  { value: "48K+", label: "Active Citizens" },
-  { value: "74%", label: "Verified Posts" },
-  { value: "3h 12m", label: "Avg. Response" }
+  { target: 92, suffix: "K+", label: "Issues Reported" },
+  { target: 48, suffix: "K+", label: "Active Citizens" },
+  { target: 74, suffix: "%", label: "Verified Posts" },
+  { target: 3, suffix: "h 12m", label: "Avg. Response" }
 ];
+
+function useCountUp(target: number, duration: number, start: boolean) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!start) return;
+
+    let startTime: number | null = null;
+    let animationFrame: number;
+
+    const step = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // easeOutExpo for a snappy feel
+      const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      setCount(Math.floor(eased * target));
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(step);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animationFrame);
+  }, [target, duration, start]);
+
+  return count;
+}
+
+function AnimatedStat({ target, suffix, label, delay }: { target: number; suffix: string; label: string; delay: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const [shouldStart, setShouldStart] = useState(false);
+
+  useEffect(() => {
+    if (isInView) {
+      const timer = setTimeout(() => setShouldStart(true), delay * 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isInView, delay]);
+
+  const count = useCountUp(target, 2000, shouldStart);
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 25 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: delay, duration: 0.5, ease: "easeOut" }}
+      className="flex-1 flex flex-col items-center relative z-10"
+    >
+      <div className="text-4xl md:text-5xl font-extrabold text-white mb-2 tabular-nums">
+        {shouldStart ? count : 0}{suffix}
+      </div>
+      <div className="text-blue-100 text-sm md:text-base font-medium font-sans uppercase tracking-wider">{label}</div>
+    </motion.div>
+  );
+}
 
 export default function AboutHighlights() {
   return (
@@ -83,17 +145,13 @@ export default function AboutHighlights() {
         <div className="absolute -top-12 -left-12 w-40 h-40 bg-blue-400/20 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-12 -right-12 w-40 h-40 bg-indigo-400/20 rounded-full blur-3xl pointer-events-none" />
         {stats.map((s, i) => (
-          <motion.div
+          <AnimatedStat
             key={s.label}
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.12 + 0.2, duration: 0.5, ease: "easeOut" }}
-            className="flex-1 flex flex-col items-center relative z-10"
-          >
-            <div className="text-4xl md:text-5xl font-extrabold text-white mb-2">{s.value}</div>
-            <div className="text-blue-100 text-sm md:text-base font-medium font-sans uppercase tracking-wider">{s.label}</div>
-          </motion.div>
+            target={s.target}
+            suffix={s.suffix}
+            label={s.label}
+            delay={i * 0.12 + 0.2}
+          />
         ))}
       </motion.div>
     </motion.section>
